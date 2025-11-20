@@ -35,14 +35,14 @@ postCategorizeTransactionsR = do
     req <- waiRequest
     csvBS <- liftIO $ consumeRequestBodyStrict req
 
-    let bankType = detectBankType csvBS
+    let bankType = detectBankType $ toStrict csvBS
     let result = case bankType of
-                ChaseBank -> chaseHandler $ removeHeader $ Csv.decodeByName $ LBS.fromStrict csvBS
-                CitiBank -> citiHandler $ removeHeader $ Csv.decodeByName $ LBS.fromStrict csvBS
-                CapitalOneBank -> capitalOneHandler $ removeHeader $ Csv.decodeByName $ LBS.fromStrict csvBS
-                WellsFargoBank -> wfHandler $ Csv.decode Csv.NoHeader $ LBS.fromStrict csvBS
-                AmericanExpressBank -> Amex.amexHandler $ removeHeader $ Csv.decodeByName $ LBS.fromStrict csvBS
-                TangerineBank -> tangerineHandler $ removeHeader $ Csv.decodeByName $ LBS.fromStrict csvBS
+                ChaseBank -> chaseHandler $ removeHeader $ Csv.decodeByName csvBS
+                CitiBank -> citiHandler $ removeHeader $ Csv.decodeByName csvBS
+                CapitalOneBank -> capitalOneHandler $ removeHeader $ Csv.decodeByName csvBS
+                WellsFargoBank -> wfHandler $ Csv.decode Csv.NoHeader csvBS
+                AmericanExpressBank -> Amex.amexHandler $ removeHeader $ Csv.decodeByName csvBS
+                TangerineBank -> tangerineHandler $ removeHeader $ Csv.decodeByName csvBS
                 UnknownBank -> error "Unknown bank"
     recategorizedTransactions <- liftIO $ recategorizeTransactions openaiKey result
     let csv = toCsv recategorizedTransactions
