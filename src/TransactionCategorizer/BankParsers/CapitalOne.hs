@@ -8,7 +8,6 @@ import Data.Csv
     ( (.:), FromNamedRecord(..), )
 import TransactionCategorizer.Utils.Date (yyyymmddSkewerDateParser)
 import qualified TransactionCategorizer.BankParsers.Transaction as Trans
-import Data.Maybe (fromMaybe)
 
 data CapitalOneTransaction = MkCapitalOneTransaction {
     transactionDate :: Day,
