@@ -15,7 +15,7 @@ categorizeTransaction key transactionText = do
 
     clientEnv <- getClientEnv "https://api.openai.com"
 
-    let Methods{ createChatCompletion } = makeMethods clientEnv key Nothing Nothing
+    let Methods{ createChatCompletion } = makeMethods clientEnv key
 
     ChatCompletionObject{ choices } <- createChatCompletion _CreateChatCompletion
         { messages = [ User{ content = [ Text{ text = promptText } ], name = Nothing } ]
@@ -35,7 +35,7 @@ categorizeTransactions key transactions = do
 
     clientEnv <- getClientEnv "https://api.openai.com"
 
-    let Methods{ createChatCompletion } = makeMethods clientEnv key Nothing Nothing
+    let Methods{ createChatCompletion } = makeMethods clientEnv key
 
     ChatCompletionObject{ choices } <- createChatCompletion _CreateChatCompletion
         { messages = [ User{ content = [ Text{ text = promptText } ], name = Nothing } ]
