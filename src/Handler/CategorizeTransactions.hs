@@ -33,7 +33,7 @@ postCategorizeTransactionsR = do
 
     -- Get raw request body as ByteString
     req <- waiRequest
-    rawBody <- liftIO $ Network.Wai.requestBody req
+    rawBody <- fmap LBS.toStrict $ strictRequestBody
     let csvBS = rawBody
 
     let bankType = detectBankType csvBS

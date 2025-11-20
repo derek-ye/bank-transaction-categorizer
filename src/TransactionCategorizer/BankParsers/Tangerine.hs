@@ -27,7 +27,7 @@ instance FromNamedRecord TangerineTransaction where
 
 toTransaction :: TangerineTransaction -> Trans.Transaction
 toTransaction MkTangerineTransaction { transactionDate = tangerineTransactionDate
-                                     , transaction = tangerineTransaction
+                                     , transaction = tangerineName
                                      , name = _
                                      , memo = _
                                      , amount = tangerineAmount
