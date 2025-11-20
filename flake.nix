@@ -9,6 +9,23 @@
     };
   in {
     packages.bank-transaction-categorizer = pkgs.haskell.packages.ghc96.bank-transaction-categorizer;
+
+    devShells.default = pkgs.mkShell {
+      buildInputs = [
+        pkgs.haskell.packages.ghc96.yesod-bin
+        pkgs.haskell.packages.ghc96.ghc
+        pkgs.haskell.packages.ghc96.cabal-install
+        pkgs.ghciwatch
+        pkgs.stack
+        pkgs.postgresql
+        pkgs.zlib
+      ];
+
+      shellHook = ''
+        echo "Yesod development environment loaded"
+        echo "Available commands: yesod, stack, cabal, ghc, ghciwatch"
+      '';
+    };
   }) // {
     overlays = {
       # Override the GHC 9.6 package set with the Haskell overlay defined below

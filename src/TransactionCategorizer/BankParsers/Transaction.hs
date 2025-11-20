@@ -11,7 +11,6 @@ import Data.Csv (ToNamedRecord(..), FromNamedRecord(..), (.=), (.:), encodeByNam
 import Data.Time (Day)
 import Data.Text
 import TransactionCategorizer.Utils.ByteString (charToWord8, stringToByteString)
-import Data.String
 import TransactionCategorizer.BankParsers.Other.Day()
 import qualified Data.ByteString.Char8 as BS8
 import qualified Data.Aeson as Aeson

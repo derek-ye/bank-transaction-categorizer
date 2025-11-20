@@ -9,14 +9,13 @@ import OpenAI.V1
 import OpenAI.V1.Chat.Completions
 import qualified Data.Text as T
 import qualified Data.Vector as V
-import Debug.Trace
 
 categorizeTransaction :: T.Text -> T.Text -> IO (V.Vector T.Text)
 categorizeTransaction key transactionText = do
 
     clientEnv <- getClientEnv "https://api.openai.com"
 
-    let Methods{ createChatCompletion } = makeMethods clientEnv key
+    let Methods{ createChatCompletion } = makeMethods clientEnv key Nothing Nothing
 
     ChatCompletionObject{ choices } <- createChatCompletion _CreateChatCompletion
         { messages = [ User{ content = [ Text{ text = promptText } ], name = Nothing } ]
@@ -36,7 +35,7 @@ categorizeTransactions key transactions = do
 
     clientEnv <- getClientEnv "https://api.openai.com"
 
-    let Methods{ createChatCompletion } = makeMethods clientEnv key
+    let Methods{ createChatCompletion } = makeMethods clientEnv key Nothing Nothing
 
     ChatCompletionObject{ choices } <- createChatCompletion _CreateChatCompletion
         { messages = [ User{ content = [ Text{ text = promptText } ], name = Nothing } ]
