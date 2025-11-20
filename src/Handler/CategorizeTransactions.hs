@@ -18,7 +18,7 @@ import qualified TransactionCategorizer.BankParsers.Tangerine as Tangerine
 import TransactionCategorizer.Core.Categorizer (categorizeTransactions)
 import qualified Data.Vector as V
 import TransactionCategorizer.Utils.Csv
-import Yesod.Core (strictRequestBody)
+import Network.Wai (consumeRequestBodyStrict)
 
 newtype CategorizeTransactionsResult = CategorizeTransactionsResult {
     categorizedTransactions :: Map.Map Text Text
@@ -32,7 +32,8 @@ postCategorizeTransactionsR = do
     let openaiKey = appOpenAiKey $ appSettings app
 
     -- Get raw request body as ByteString
-    csvBS <- LBS.toStrict <$> strictRequestBody
+    req <- waiRequest
+    csvBS <- liftIO $ consumeRequestBodyStrict req
 
     let bankType = detectBankType csvBS
     let result = case bankType of
