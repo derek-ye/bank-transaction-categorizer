@@ -18,7 +18,6 @@ import qualified TransactionCategorizer.BankParsers.Tangerine as Tangerine
 import TransactionCategorizer.Core.Categorizer (categorizeTransactions)
 import qualified Data.Vector as V
 import TransactionCategorizer.Utils.Csv
-import Network.Wai
 
 newtype CategorizeTransactionsResult = CategorizeTransactionsResult {
     categorizedTransactions :: Map.Map Text Text
@@ -32,9 +31,7 @@ postCategorizeTransactionsR = do
     let openaiKey = appOpenAiKey $ appSettings app
 
     -- Get raw request body as ByteString
-    req <- waiRequest
-    rawBody <- fmap LBS.toStrict $ strictRequestBody
-    let csvBS = rawBody
+    csvBS <- LBS.toStrict <$> strictRequestBody
 
     let bankType = detectBankType csvBS
     let result = case bankType of

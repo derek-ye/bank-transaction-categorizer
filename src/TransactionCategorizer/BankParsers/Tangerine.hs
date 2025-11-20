@@ -11,8 +11,8 @@ import qualified TransactionCategorizer.BankParsers.Transaction as Trans
 
 data TangerineTransaction = MkTangerineTransaction {
     transactionDate :: Day,
-    transaction :: T.Text,
-    name :: T.Text,
+    transaction :: T.Text, -- this is always "OTHER" for some reason
+    name :: T.Text, -- this is the description of the transaction
     memo :: T.Text,
     amount :: Double
 } deriving (Show)
